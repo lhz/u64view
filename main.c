@@ -113,7 +113,7 @@ void setColors(int colors) {
 
 
 void chkSeq(const char* msg, uint16_t *lseq, uint16_t cseq) {
-    if((uint16_t)(*lseq+1) != cseq && (totalAdataBytes>1024*10 && totalVdataBytes > 1024*1024) ) {
+    if ((uint16_t)(*lseq+1) != cseq && (totalAdataBytes>1024*10 && totalVdataBytes > 1024*1024) ) {
         printf(msg, *lseq, cseq);
     }
     *lseq=cseq;
@@ -272,7 +272,7 @@ int main(int argc, char** argv) {
     printf("\nUltimate 64 view!\n-----------------\n  Try -h for options.\n\n");
 
     for(int i=1; i < argc; i++) {
-        if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+        if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
             printf("\nUsage: u64view [-z N |-f] [-s] [-v] [-V] [-c] [-m] [-t] [-T [RGB,...]] [-u IP | -U IP -I IP] [-o FN]\n"
                     "       -z N  (default 1)   Scale the window to N times size, N must be an integer.\n"
                     "       -f    (default off) Fullscreen, will stretch.\n"
@@ -288,11 +288,11 @@ int main(int argc, char** argv) {
                     "       -I IP (default off) Just know the IP, do nothing, so keys can be used for starting/stopping stream.\n"
                     "       -o FN (default off) Output raw ARGB to FN.rgb and PCM to FN.pcm (20 MiB/s, you disk must keep up or packets are dropped).\n\n");
                     return 0;
-        } else if(strcmp(argv[i], "-z") == 0) {
-            if(i+1 < argc) {
+        } else if (strcmp(argv[i], "-z") == 0) {
+            if (i+1 < argc) {
                 i++;
                 scale=atoi(argv[i]);
-                if(scale==0) {
+                if (scale==0) {
                     printf("Scale must be an integer larger than 0.\n");
                     return 1;
                 }
@@ -301,27 +301,27 @@ int main(int argc, char** argv) {
                 printf("Missing the scale number, see -h");
                 return 1;
             }
-        } else if(strcmp(argv[i], "-f")==0) {
+        } else if (strcmp(argv[i], "-f")==0) {
             fullscreenFlag = SDL_WINDOW_FULLSCREEN_DESKTOP;
             printf("Fullscreen is on.\n");
-        }  else if(strcmp(argv[i], "-s")==0) {
+        }  else if (strcmp(argv[i], "-s")==0) {
             renderFlag = SDL_RENDERER_SOFTWARE;
-        }  else if(strcmp(argv[i], "-v")==0) {
+        }  else if (strcmp(argv[i], "-v")==0) {
             vsyncFlag = SDL_RENDERER_PRESENTVSYNC;
             printf("Vsync is on.\n");
-        } else if(strcmp(argv[i], "-V")==0) {
+        } else if (strcmp(argv[i], "-V")==0) {
             verbose=1;
             printf("Verbose is on.\n");
-        } else if(strcmp(argv[i], "-c")==0) {
+        } else if (strcmp(argv[i], "-c")==0) {
             fast=0;
-        } else if(strcmp(argv[i], "-m")==0) {
+        } else if (strcmp(argv[i], "-m")==0) {
             audioFlag=0;
             printf("Audio is off.\n");
-        } else if(strcmp(argv[i], "-t")==0) {
+        } else if (strcmp(argv[i], "-t")==0) {
             curColors = 1;
             printf("Using DusteDs CRT colors.\n");
-        } else if(strcmp(argv[i], "-T") == 0) {
-            if(i+1 >= argc || argv[i+1][0] == '-') {
+        } else if (strcmp(argv[i], "-T") == 0) {
+            if (i+1 >= argc || argv[i+1][0] == '-') {
                 printf("User-defined color option (-T):\n\n    Default colors: ");
                 printColors(sred, sgreen, sblue);
                 printf("\n    DusteDs colors: ");
@@ -335,7 +335,7 @@ int main(int argc, char** argv) {
                 char* ucol = argv[i];
                 printf("Using user-provided colors: ");
                 const int ucbytes = 16*6 + 15; // 16 6 byte values + the 15 commas between them
-                if(strlen(ucol) != ucbytes)
+                if (strlen(ucol) != ucbytes)
                 {
                     printf("Error: Expected a string of exactly %i characters (see  -T without parameter to see examples)\n", ucbytes);
                 }
@@ -367,8 +367,8 @@ int main(int argc, char** argv) {
                 printColors(ured, ugreen, ublue);
                 printf("\n");
             }
-        } else if(strcmp(argv[i], "-o") == 0) {
-            if(i+1 < argc) {
+        } else if (strcmp(argv[i], "-o") == 0) {
+            if (i+1 < argc) {
                 i++;
                 verbose=1;
                 printf("Turning on verbose mode, so you can see if you miss any data!\n");
@@ -381,13 +381,13 @@ int main(int argc, char** argv) {
 
                 sprintf(fnbuf, "%s.rgb", argv[i]);
                 vfp=fopen(fnbuf,"w");
-                if(!vfp) {
+                if (!vfp) {
                     printf("Error opening %s for writing.\n", fnbuf);
                     return 1;
                 }
                 sprintf(fnbuf, "%s.pcm", argv[i]);
                 afp=fopen(fnbuf,"w");
-                if(!afp) {
+                if (!afp) {
                     printf("Error opening %s for writing.\n", fnbuf);
                     return 1;
                 }
@@ -395,15 +395,15 @@ int main(int argc, char** argv) {
                 printf("Missing filename.\n");
                 return 1;
             }
-        } else if(strcmp(argv[i], "-u") == 0 || strcmp(argv[i], "-U") == 0 || strcmp(argv[i], "-I") == 0) {
-            if(strcmp(argv[i], "-U") == 0) {
+        } else if (strcmp(argv[i], "-u") == 0 || strcmp(argv[i], "-U") == 0 || strcmp(argv[i], "-I") == 0) {
+            if (strcmp(argv[i], "-U") == 0) {
                 stopStreamOnExit=0;
             }
-            if(strcmp(argv[i], "-I") == 0) {
+            if (strcmp(argv[i], "-I") == 0) {
                 stopStreamOnExit=0;
                 startStreamOnStart=0;
             }
-            if(i+1 < argc) {
+            if (i+1 < argc) {
                 i++;
                 hostName = argv[i];
                 server.sin_addr.s_addr = inet_addr(hostName);
@@ -431,42 +431,42 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    if(SDLNet_Init()==-1) {
+    if (SDLNet_Init()==-1) {
         printf("SDLNet_Init: %s\n", SDLNet_GetError());
         return 2;
     }
 
-    if(hostName && startStreamOnStart) {
+    if (hostName && startStreamOnStart) {
         u64_startstreams();
     }
 
     set=SDLNet_AllocSocketSet(2);
-    if(!set) {
+    if (!set) {
         printf("SDLNet_AllocSocketSet: %s\n", SDLNet_GetError());
         return 4;
     }
 
     printf("Opening UDP socket on port %i for video...\n", listen);
     udpsock=SDLNet_UDP_Open(listen);
-    if(!udpsock) {
+    if (!udpsock) {
         printf("SDLNet_UDP_Open: %s\n", SDLNet_GetError());
         return 3;
     }
 
-    if( SDLNet_UDP_AddSocket(set,udpsock) == -1 ) {
+    if ( SDLNet_UDP_AddSocket(set,udpsock) == -1 ) {
         printf("SDLNet_UDP_AddSocket error: %s\n", SDLNet_GetError());
         return 5;
     }
 
-    if(audioFlag) {
+    if (audioFlag) {
         printf("Opening UDP socket on port %i for audio...\n", listenaudio);
         audiosock=SDLNet_UDP_Open(listenaudio);
-        if(!audiosock) {
+        if (!audiosock) {
             printf("SDLNet_UDP_Open: %s\n", SDLNet_GetError());
             return 3;
         }
 
-        if( SDLNet_UDP_AddSocket(set,audiosock) == -1 ) {
+        if ( SDLNet_UDP_AddSocket(set,audiosock) == -1 ) {
             printf("SDLNet_UDP_AddSocket error: %s\n", SDLNet_GetError());
             return 5;
         }
@@ -478,7 +478,7 @@ int main(int argc, char** argv) {
         want.samples = 192;
         dev = SDL_OpenAudioDevice(NULL, 0, &want, &have, 0);
 
-        if(dev==0) {
+        if (dev==0) {
             printf("Failed to open audio: %s", SDL_GetError());
         }
 
@@ -510,7 +510,7 @@ int main(int argc, char** argv) {
                                 width,
                                 height);
 
-    if( SDL_LockTexture(tex, NULL, (void**)&pixels, &pitch) ) {
+    if ( SDL_LockTexture(tex, NULL, (void**)&pixels, &pitch) ) {
         printf("Failed to lock texture for writing");
     }
 
@@ -588,42 +588,42 @@ int main(int argc, char** argv) {
         }
 
         // Check for audio
-        if(audioFlag) {
+        if (audioFlag) {
             r = SDLNet_UDP_Recv(audiosock, audpkg);
-            if(r==1) {
+            if (r==1) {
 
-                if(totalAdataBytes==0) {
+                if (totalAdataBytes==0) {
                     printf("Got data on audio port (%i) from %s:%i\n", listenaudio, intToIp(audpkg->address.host),audpkg->address.port );
                 }
                 totalAdataBytes += sizeof(a64msg_t);
 
                 a64msg_t *a = (a64msg_t*)audpkg->data;
-                if(verbose) chkSeq("UDP audio packet missed or out of order, last received: %i current %i\n", &lastAseq, a->seq);
+                if (verbose) chkSeq("UDP audio packet missed or out of order, last received: %i current %i\n", &lastAseq, a->seq);
 
-                if(afp && totalVdataBytes != 0 && totalAdataBytes != 0) {
+                if (afp && totalVdataBytes != 0 && totalAdataBytes != 0) {
                     fwrite(a->sample, 192*4, 1, afp);
                 }
 
                 SDL_QueueAudio(dev, a->sample, 192*4 );
-            } else if(r == -1) {
+            } else if (r == -1) {
                 printf("SDLNet_UDP_Recv error: %s\n", SDLNet_GetError());
             }
         }
 
         // Check for video
         r = SDLNet_UDP_Recv(udpsock, pkg);
-        if(r==1 && !showHelp) {
+        if (r==1 && !showHelp) {
 
-            if(totalVdataBytes==0) {
+            if (totalVdataBytes==0) {
                 printf("Got data on video port (%i) from %s:%i\n", listen, intToIp(pkg->address.host),pkg->address.port );
             }
             totalVdataBytes += sizeof(u64msg_t);
 
             u64msg_t *p = (u64msg_t*)pkg->data;
-            if(verbose) chkSeq("UDP video packet missed or out of order, last received: %i current %i\n", &lastVseq, p->seq);
+            if (verbose) chkSeq("UDP video packet missed or out of order, last received: %i current %i\n", &lastVseq, p->seq);
 
             int y = p->line & 0b0111111111111111;
-            if(fast) {
+            if (fast) {
                 int lpp = p->linexInPacket;
                 int hppl =p->pixelsInLine/2;
                 for(int l=0; l < lpp; l++) {
@@ -653,33 +653,33 @@ int main(int argc, char** argv) {
                     }
                 }
             }
-            if(p->line & 0b1000000000000000) {
+            if (p->line & 0b1000000000000000) {
                 sync=1;
                 staleVideo=0;
             }
-        } else if(r == -1) {
+        } else if (r == -1) {
             printf("SDLNet_UDP_Recv error: %s\n", SDLNet_GetError());
         } else {
             staleVideo++;
-            if(staleVideo > 5) {
-                if(staleVideo == 6) {
+            if (staleVideo > 5) {
+                if (staleVideo == 6) {
                     pic(tex, width, height, pitch, pixels);
-                } else if(staleVideo%10 == 0) {
+                } else if (staleVideo%10 == 0) {
                     sync=1;
                 }
             }
         }
 
-        if(sync) {
+        if (sync) {
             sync=0;
-            if(fast) {
-                if(vfp && totalVdataBytes != 0 && totalAdataBytes != 0) {
+            if (fast) {
+                if (vfp && totalVdataBytes != 0 && totalAdataBytes != 0) {
                     fwrite(pixels, sizeof(uint32_t)*width*height, 1, vfp);
                 }
                 SDL_UnlockTexture(tex);
                 SDL_RenderCopy(ren, tex, NULL, NULL);
                 SDL_RenderPresent(ren);
-                if( SDL_LockTexture(tex, NULL, (void**)&pixels, &pitch) ) {
+                if ( SDL_LockTexture(tex, NULL, (void**)&pixels, &pitch) ) {
                     printf("Error: Failed to lock texture for writing.");
                 }
             } else {
@@ -689,17 +689,17 @@ int main(int argc, char** argv) {
         SDLNet_CheckSockets(set, 200);
     }
 
-    if(hostName && stopStreamOnExit) {
+    if (hostName && stopStreamOnExit) {
         u64_stopstreams();
     }
 
     SDL_DestroyTexture(tex);
-    if(audioFlag) {
+    if (audioFlag) {
         SDL_CloseAudioDevice(dev);
     }
 
     // The logic being that if opening either went south, we already exited.
-    if(vfp) {
+    if (vfp) {
         fclose(vfp);
         fclose(afp);
     }
@@ -707,9 +707,9 @@ int main(int argc, char** argv) {
     SDL_DestroyWindow(win);
     SDL_Quit();
 
-    if(verbose) {
+    if (verbose) {
         printf("\nReceived video data: %"PRIu64" bytes.\nReceived audio data: %"PRIu64" bytes.\n", totalVdataBytes, totalAdataBytes);
+        printf("\n\nThanks to Jens Blidon and Markus Schneider for making my favourite tunes!\nThanks to Booze for making the best remix of Chicanes Halcyon and such beautiful visuals to go along with it!\nThanks to Gideons Logic for the U64!\n\n                                    - DusteD says hi! :-)\n\n");
     }
-    //printf("\n\nThanks to Jens Blidon and Markus Schneider for making my favourite tunes!\nThanks to Booze for making the best remix of Chicanes Halcyon and such beautiful visuals to go along with it!\nThanks to Gideons Logic for the U64!\n\n                                    - DusteD says hi! :-)\n\n");
     return 0;
 }
