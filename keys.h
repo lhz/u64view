@@ -3,8 +3,8 @@
 
   Mapping tables from SDL key symbols to C-64 PETSCII codes
 
-  See https://wiki.libsdl.org/SDLKeycodeLookup and Appendix C in
-  the Commodore 64 Programmer's Reference Manual.
+  SDL key codes: https://wiki.libsdl.org/SDLKeycodeLookup
+  PETSCII codes: http://unusedino.de/ec64/technical/aay/c64/chrstabu.htm
 */
 
 

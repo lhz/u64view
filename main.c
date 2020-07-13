@@ -533,8 +533,8 @@ int main(int argc, char** argv) {
                 sym = event.key.keysym.sym;
                 add = 0;
                 code = 0;
-                //printf("KEYDOWN: mod=%d, sym=%d\n", mod, sym);
-                switch (mod) {
+                printf("KEYDOWN: mod=%d, sym=%d\n", mod, sym);
+                switch (mod & (KMOD_SHIFT | KMOD_CTRL | KMOD_ALT)) {
                 case KMOD_NONE:
                     // No modifiers
                     if (sym >= SDLK_a && sym <= SDLK_z) {
